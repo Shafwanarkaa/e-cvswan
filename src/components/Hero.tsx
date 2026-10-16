@@ -181,7 +181,7 @@ export default function Hero() {
               <img
                 src={profile.profileImagePath}
                 alt={profile.name}
-                className="w-full h-full object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover object-[50%_22%] scale-[1.85] origin-[50%_22%] filter brightness-95 group-hover:scale-[1.95] transition-transform duration-500"
               />
 
               {/* Open to Work floating pill on bottom of photo */}

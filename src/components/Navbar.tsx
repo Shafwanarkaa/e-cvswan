@@ -1,26 +1,34 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Menu, X, Download } from 'lucide-react';
-import { useLanguage } from '@/lib/language-context';
-import { translations } from '@/data/translations';
-import { profile } from '@/data/profile';
-import { cn } from '@/lib/utils';
+import { useState, useEffect } from "react";
+import { Menu, X, Download } from "lucide-react";
+import { useLanguage } from "@/lib/language-context";
+import { translations } from "@/data/translations";
+import { profile } from "@/data/profile";
+import { cn } from "@/lib/utils";
 
-const NAV_ITEMS = ['home', 'about', 'experience', 'projects', 'skills', 'certifications', 'contact'] as const;
+const NAV_ITEMS = [
+  "home",
+  "about",
+  "experience",
+  "projects",
+  "skills",
+  "certifications",
+  "contact",
+] as const;
 
 export default function Navbar() {
   const { lang } = useLanguage();
   const t = translations[lang].nav;
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
       // Track active section
-      const sections = NAV_ITEMS.map(id => document.getElementById(id));
+      const sections = NAV_ITEMS.map((id) => document.getElementById(id));
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = sections[i];
         if (el && window.scrollY >= el.offsetTop - 120) {
@@ -29,15 +37,15 @@ export default function Navbar() {
         }
       }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavClick = (id: string) => {
     setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -45,20 +53,20 @@ export default function Navbar() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled
-            ? 'bg-[#0B1715]/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/5'
-            : 'bg-transparent'
+            ? "bg-[#0B1715]/95 backdrop-blur-md shadow-lg shadow-black/20 border-b border-white/5"
+            : "bg-transparent",
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => handleNavClick('home')}
+            onClick={() => handleNavClick("home")}
             className="text-white font-bold text-lg tracking-tight hover:text-[#83E6B2] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#83E6B2] rounded"
             aria-label="Go to top"
           >
-            <span className="text-[#83E6B2]">S</span>AP
+            <span className="text-[#83E6B2]">S</span>wan
           </button>
 
           {/* Desktop nav */}
@@ -68,10 +76,10 @@ export default function Navbar() {
                 <button
                   onClick={() => handleNavClick(item)}
                   className={cn(
-                    'text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#83E6B2] rounded px-1 py-0.5',
+                    "text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#83E6B2] rounded px-1 py-0.5",
                     activeSection === item
-                      ? 'text-[#83E6B2]'
-                      : 'text-[#A7B6AF] hover:text-white'
+                      ? "text-[#83E6B2]"
+                      : "text-[#A7B6AF] hover:text-white",
                   )}
                 >
                   {t[item]}
@@ -109,7 +117,12 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Navigation menu">
+        <div
+          className="fixed inset-0 z-50 md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+        >
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMenuOpen(false)}
@@ -133,10 +146,10 @@ export default function Navbar() {
                   <button
                     onClick={() => handleNavClick(item)}
                     className={cn(
-                      'w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#83E6B2]',
+                      "w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#83E6B2]",
                       activeSection === item
-                        ? 'bg-[#83E6B2]/10 text-[#83E6B2]'
-                        : 'text-[#A7B6AF] hover:bg-white/5 hover:text-white'
+                        ? "bg-[#83E6B2]/10 text-[#83E6B2]"
+                        : "text-[#A7B6AF] hover:bg-white/5 hover:text-white",
                     )}
                   >
                     {t[item]}
@@ -172,27 +185,27 @@ function LanguageSwitcher() {
       aria-label="Language switcher"
     >
       <button
-        onClick={() => setLang('en')}
+        onClick={() => setLang("en")}
         className={cn(
-          'px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#83E6B2]',
-          lang === 'en'
-            ? 'bg-[#83E6B2] text-[#0B1715]'
-            : 'text-[#A7B6AF] hover:text-white'
+          "px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#83E6B2]",
+          lang === "en"
+            ? "bg-[#83E6B2] text-[#0B1715]"
+            : "text-[#A7B6AF] hover:text-white",
         )}
-        aria-pressed={lang === 'en'}
+        aria-pressed={lang === "en"}
         aria-label="Switch to English"
       >
         EN
       </button>
       <button
-        onClick={() => setLang('id')}
+        onClick={() => setLang("id")}
         className={cn(
-          'px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#83E6B2]',
-          lang === 'id'
-            ? 'bg-[#83E6B2] text-[#0B1715]'
-            : 'text-[#A7B6AF] hover:text-white'
+          "px-2.5 py-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#83E6B2]",
+          lang === "id"
+            ? "bg-[#83E6B2] text-[#0B1715]"
+            : "text-[#A7B6AF] hover:text-white",
         )}
-        aria-pressed={lang === 'id'}
+        aria-pressed={lang === "id"}
         aria-label="Switch to Indonesian"
       >
         ID
